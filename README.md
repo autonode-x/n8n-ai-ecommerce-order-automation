@@ -116,9 +116,8 @@ Follow-up Email
 ```text
 n8n-ai-ecommerce-order-automation
 │
-├── workflows
-│   ├── ai-order-processing.json
-│   └── customer-followup.json
+├── workflow
+│   ├── workflow.json
 │
 ├── assets
 ├── screenshots
@@ -160,18 +159,6 @@ n8n-ai-ecommerce-order-automation
 
 ---
 
-# 📷 Screenshots
-
-Add screenshots inside the `/screenshots` folder.
-
-* Workflow
-* AI Output
-* Slack Notification
-* Google Sheets
-* Confirmation Email
-* Follow-up Email
-
----
 
 # 💼 Business Benefits
 
@@ -220,3 +207,7 @@ AI Automation Developer
 # 📄 License
 
 This project is licensed under the MIT License.
+
+## ⭐ Support
+
+If you found this project helpful, please consider giving it a ⭐ on GitHub.

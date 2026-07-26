@@ -1,0 +1,7 @@
+{
+  "order_id": "ORD-1001",
+  "customer_email": "customer@example.com",
+  "product_name": "Wireless Mouse",
+  "quantity": 3,
+  "price": 1499
+}

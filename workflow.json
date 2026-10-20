@@ -3,113 +3,84 @@
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "ecommerce-order-automation",
+        "path": "order-intake-portfolio",
         "responseMode": "responseNode",
         "options": {}
       },
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        0,
-        252
+        -2032,
+        240
       ],
-      "id": "fcebec84-e9e8-4251-be02-ae33a6bceb60",
-      "name": "Webhook",
-      "webhookId": "4e8c2a91-7f3d-4b6c-9a5e-8d1f6c3b7e42"
+      "id": "1d33586a-eec8-4ab7-8a1a-c916849a7dd7",
+      "name": "Order Intake Webhook - Configure Authentication",
+      "notesInFlow": true,
+      "notes": "SECURITY BLOCKER: The source export does not show webhook authentication configured. Require a trusted e-commerce provider signature/HMAC or equivalent auth, rate limits, body-size limits, and abuse monitoring before activation. This endpoint can send customer emails."
     },
     {
       "parameters": {
         "assignments": {
           "assignments": [
             {
-              "id": "3f85029a-aaf4-44dc-9140-02ee573e849c",
+              "id": "1da86032-d20f-47c3-9e92-bbe56e77c516",
               "name": "order_id",
-              "value": "={{ $json.body.order_id }}",
+              "value": "={{ String($json.body?.order_id ?? '').trim() }}",
               "type": "string"
             },
             {
-              "id": "b9ceb0a6-c6ca-40cc-8283-074cf78aec82",
+              "id": "0852e6eb-cf95-4ee1-8e44-764a18b91359",
               "name": "customer_email",
-              "value": "={{ $json.body.customer_email }}",
+              "value": "={{ String($json.body?.customer_email ?? '').trim().toLowerCase() }}",
               "type": "string"
             },
             {
-              "id": "34a5dd3e-cdd5-463a-94fb-e2e38e0cb4e5",
+              "id": "045fb889-2467-4ae6-aaea-7ac8050a6d60",
               "name": "product_name",
-              "value": "={{ $json.body.product_name }}",
+              "value": "={{ String($json.body?.product_name ?? '').trim() }}",
               "type": "string"
             },
             {
-              "id": "851b31ac-2ba9-4d4a-80af-e76bd2a18417",
+              "id": "7104b17a-cf1e-472f-b61f-18e73514607c",
               "name": "quantity",
-              "value": "={{ $json.body.quantity }}",
-              "type": "number"
+              "value": "={{ String($json.body?.quantity ?? '') }}",
+              "type": "string"
             },
             {
-              "id": "49a112a0-14a5-4212-874f-83e6ac4b0f03",
+              "id": "6548bf22-f839-4cc4-bdb2-56dd62249864",
               "name": "price",
-              "value": "={{ $json.body.price }}",
-              "type": "number"
-            },
-            {
-              "id": "24067daa-a084-4803-8ed0-30bf1bb051a3",
-              "name": "customer_name",
-              "value": "",
+              "value": "={{ String($json.body?.price ?? '') }}",
               "type": "string"
             },
             {
-              "id": "b6c77a68-5e2a-43b7-a06b-651f7bf1f77a",
-              "name": "customer_phone",
-              "value": "",
-              "type": "string"
+              "id": "c03ae54c-94ac-432c-b08b-0c85df8755b5",
+              "name": "order_id_is_string",
+              "value": "={{ typeof $json.body?.order_id === 'string' }}",
+              "type": "boolean"
             },
             {
-              "id": "8451ffb7-9848-47e5-878d-1ee99c72f3ad",
-              "name": "",
-              "value": "",
-              "type": "string"
+              "id": "9e77fb18-c639-4072-9ae9-8794522528ae",
+              "name": "email_is_string",
+              "value": "={{ typeof $json.body?.customer_email === 'string' }}",
+              "type": "boolean"
             },
             {
-              "id": "ab7e2647-0356-4bb3-803d-fb72de20a69b",
-              "name": "shiping_address",
-              "value": "",
-              "type": "string"
+              "id": "cadbd616-802e-4b4f-b987-48397470777b",
+              "name": "product_is_string",
+              "value": "={{ typeof $json.body?.product_name === 'string' }}",
+              "type": "boolean"
             },
             {
-              "id": "6a92983c-31d5-40aa-8f4f-df5bccf0d563",
-              "name": "shiping_method",
-              "value": "",
-              "type": "string"
+              "id": "921ea717-b41b-458d-8276-a526f82532bc",
+              "name": "quantity_is_number",
+              "value": "={{ typeof $json.body?.quantity === 'number' }}",
+              "type": "boolean"
             },
             {
-              "id": "ecdbbdc7-d556-4caa-a17f-21ee1844d006",
-              "name": "currency",
-              "value": "INR",
-              "type": "string"
-            },
-            {
-              "id": "0868f4e9-cfa6-4bb5-9ca3-3cd0d6993895",
-              "name": "country",
-              "value": "",
-              "type": "string"
-            },
-            {
-              "id": "8baae112-9118-4555-8977-0d7c74f9adc5",
-              "name": "order_date",
-              "value": "={{ $now.toISO() }}",
-              "type": "string"
-            },
-            {
-              "id": "a3557f8c-c4a4-4c4a-8a57-87c23a058f49",
-              "name": "total_amount",
-              "value": "={{ Number($json.body.price) * Number($json.body.quantity) }}",
-              "type": "string"
-            },
-            {
-              "id": "f82a46e8-3a73-48ac-af8c-3581f9e7ae8a",
-              "name": "status",
-              "value": "Received",
-              "type": "string"
+              "id": "70991dbe-2177-46a7-9734-69adc9e8d779",
+              "name": "price_is_number",
+              "value": "={{ typeof $json.body?.price === 'number' }}",
+              "type": "boolean"
             }
           ]
         },
@@ -118,44 +89,135 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        224,
-        252
+        -1808,
+        240
       ],
-      "id": "cf81a858-3825-490a-bdfb-9dddc4fcef30",
-      "name": "Edit Fields"
+      "id": "0afb73de-78f6-45bd-b2df-7b690bbefc4a",
+      "name": "Normalize Order Input"
     },
     {
       "parameters": {
-        "promptType": "define",
-        "text": "=Order Details\n\nOrder ID:\n{{ $('Edit Fields').item.json.order_id }}\n\nCustomer Email:\n{{ $('Edit Fields').item.json.customer_email }}\n\nProduct:\n{{ $('Edit Fields').item.json.product_name }}\n\nQuantity:\n{{ $('Edit Fields').item.json.quantity }}\n\nPrice:\n{{ $('Edit Fields').item.json.price }}\n\nReturn only JSON.",
-        "hasOutputParser": true,
-        "options": {
-          "systemMessage": "You are an AI Order Processing Assistant.\n\nAnalyze every incoming order.\n\nRules:\n\n1. If quantity > 5 OR total price > 10000\nPriority = High\n\n2. If quantity between 2-5\nPriority = Medium\n\n3. Otherwise\nPriority = Low\n\nShipping Rules\n\nHigh -> Express\nMedium -> Express\nLow -> Standard\n\nStatus\n\nAlways Approved unless order data is invalid.\n\nEstimated Delivery\n\nExpress = Today +2 Days\nStandard = Today +5 Days\n\nReturn ONLY valid JSON."
-        }
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "1759a64c-6c1a-4d06-9a44-728b16f3904c",
+              "leftValue": "={{ $json.order_id_is_string === true }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "eb7e8351-fc20-47a5-a41d-372e55184cc2",
+              "leftValue": "={{ $json.email_is_string === true }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "512501e5-704e-4443-bf4e-e401df21a93e",
+              "leftValue": "={{ $json.product_is_string === true }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "fd4adffc-71c2-4491-9c1f-c6ae07a3da0b",
+              "leftValue": "={{ $json.quantity_is_number === true }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "53fb9f8f-96df-4c11-b580-6eee4caf0a1a",
+              "leftValue": "={{ $json.price_is_number === true }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "08094255-5f6d-4dd0-8286-517899e9ee4f",
+              "leftValue": "={{ /^[A-Za-z0-9_-]{3,80}$/.test($json.order_id) }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "fd387055-87e1-4fe2-bb1f-27014654f6dc",
+              "leftValue": "={{ /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test($json.customer_email) && $json.customer_email.length <= 254 }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "827fbdeb-ebdc-47f2-90fb-03467f519692",
+              "leftValue": "={{ $json.product_name.length >= 1 && $json.product_name.length <= 200 }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "de461b87-b9d4-42a7-ac0c-1d721c6c4c55",
+              "leftValue": "={{ /^\\d{1,4}$/.test($json.quantity) && Number($json.quantity) >= 1 && Number($json.quantity) <= 1000 }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "704824f6-83ed-4722-b75d-255c9dec2470",
+              "leftValue": "={{ /^\\d{1,9}(\\.\\d{1,2})?$/.test($json.price) && Number($json.price) > 0 && Number($json.price) <= 100000000 }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
       },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 3.1,
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
       "position": [
-        672,
-        0
+        -1584,
+        240
       ],
-      "id": "cb3d2f4e-46b3-4ef2-9fb3-b8a28f9df277",
-      "name": "AI Agent",
-      "retryOnFail": true,
-      "waitBetweenTries": 3000
-    },
-    {
-      "parameters": {
-        "jsonSchemaExample": "{\n  \"status\": \"approved\",\n  \"priority\": \"high\",\n  \"shipping_method\": \"express\",\n  \"estimated_delivery\": \"2026-07-08\",\n  \"tracking_message\": \"Your order has been confirmed.\",\n  \"customer_type\": \"new\",\n  \"discount_eligible\": false,\n  \"estimated_dispatch\": \"2026-07-04\",\n  \"order_summary\": {\n    \"product_name\": \"\",\n    \"quantity\": 1,\n    \"total_amount\": 0\n  }\n}"
-      },
-      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
-      "typeVersion": 1.3,
-      "position": [
-        808,
-        224
-      ],
-      "id": "1511596a-f8c9-40da-8d16-422234abb87c",
-      "name": "Structured Output Parser"
+      "id": "a8c1df03-715c-487f-97b6-38c94632415d",
+      "name": "Validate Order Input"
     },
     {
       "parameters": {
@@ -163,33 +225,40 @@
         "operation": "appendOrUpdate",
         "documentId": {
           "__rl": true,
-          "value": "1a2B3c4D5e6F7g8H9i0JkLmNoPqRsTuVwXyZ1234",
+          "value": "REPLACE_WITH_YOUR_GOOGLE_SHEET_ID",
           "mode": "list",
-          "cachedResultName": "leads",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1a2B3c4D5e6F7g8H9i0JkLmNoPqRsTuVwXyZ1234/edit?usp=drivesdk"
+          "cachedResultName": "Configure after import",
+          "cachedResultUrl": ""
         },
         "sheetName": {
           "__rl": true,
-          "value": 0,
+          "value": "REPLACE_WITH_YOUR_SHEET_TAB",
           "mode": "list",
-          "cachedResultName": "Inventory UPDATE",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1a2B3c4D5e6F7g8H9i0JkLmNoPqRsTuVwXyZ1234/edit#gid=0"
+          "cachedResultName": "Configure after import",
+          "cachedResultUrl": ""
         },
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "Order ID": "={{ $('Edit Fields').item.json.order_id }}",
-            "Customer": "={{ $('Edit Fields').item.json.customer_email }}",
-            "Product": "={{ $('Edit Fields').item.json.product_name }}",
-            "Quantity": "={{ $('Edit Fields').item.json.quantity }}",
-            "Status": "={{ $json.output.status }}",
-            "Shipping": "={{ $json.output.shipping_method }}",
-            "Delivery Date": "={{ $json.output.estimated_delivery }}"
+            "Order ID": "={{ $('Normalize Order Input').item.json.order_id }}",
+            "Customer": "={{ $('Normalize Order Input').item.json.customer_email }}",
+            "Product": "={{ $('Normalize Order Input').item.json.product_name }}",
+            "Quantity": "={{ Number($('Normalize Order Input').item.json.quantity) }}"
           },
           "matchingColumns": [
             "Order ID"
           ],
           "schema": [
+            {
+              "id": "order_date",
+              "displayName": "order_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
             {
               "id": "Order ID",
               "displayName": "Order ID",
@@ -231,14 +300,44 @@
               "removed": false
             },
             {
-              "id": "Status",
-              "displayName": "Status",
+              "id": "priority",
+              "displayName": "priority",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true,
-              "removed": false
+              "removed": true
+            },
+            {
+              "id": "warehouse",
+              "displayName": "warehouse",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "froud risk",
+              "displayName": "froud risk",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "cutomer segment",
+              "displayName": "cutomer segment",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
               "id": "Shipping",
@@ -248,7 +347,7 @@
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true,
-              "removed": false
+              "removed": true
             },
             {
               "id": "Delivery Date",
@@ -258,7 +357,47 @@
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true,
-              "removed": false
+              "removed": true
+            },
+            {
+              "id": "payment",
+              "displayName": "payment",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "country",
+              "displayName": "country",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "created at",
+              "displayName": "created at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
             }
           ],
           "attemptToConvertTypes": false,
@@ -269,82 +408,193 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1248,
-        104
+        -912,
+        144
       ],
-      "id": "a727fe0d-5388-4563-8090-95333c4cda45",
-      "name": "Append or update row in sheet",
-      "credentials": {
-        "googleApi": {
-          "id": "hF7Qz2WcRq9NpXeS",
-          "name": "Google Sheets account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "sendTo": "={{ $('Edit Fields').item.json.customer_email }}",
-        "subject": "=Your Order #{{ $('Edit Fields').item.json.order_id }} has been Confirmed 🎉",
-        "emailType": "text",
-        "message": "=Hi,\n\nThank you for shopping with us!\n\nWe're happy to let you know that your order has been confirmed successfully.\n\n----------------------------------\n\nOrder Details\n\nOrder ID:\n{{ $('Edit Fields').item.json.order_id }}\n\nProduct:\n{{ $('Edit Fields').item.json.product_name }}\n\nQuantity:\n{{ $('Edit Fields').item.json.quantity }}\n\nTotal Amount:\n₹{{ $('Edit Fields').item.json.price }}\n\nShipping Method:\n{{ $('Append or update row in sheet').item.json.Shipping }}\n\nEstimated Delivery:\n{{ $('Append or update row in sheet').item.json['Delivery Date'] }}\n\n----------------------------------\n\nOur team is preparing your package.\n\nWe'll notify you once your order has been shipped.\n\nThank you for choosing us.\n\nBest Regards,\nYour Name\nAutoNode\nAI Automations & AI Agents",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.2,
-      "position": [
-        1696,
-        8
-      ],
-      "id": "43f4afd1-525c-43cf-bf75-94067174f8da",
-      "name": "Send a message",
-      "webhookId": "6b9f3d82-4e7a-4c1f-9b6d-3e8a5c2f7d91",
+      "id": "93a1dabf-4842-4261-adcd-2da6c8ef292f",
+      "name": "Upsert New Order in Google Sheets",
+      "retryOnFail": true,
+      "waitBetweenTries": 2000,
+      "maxTries": 3,
       "notesInFlow": true,
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "mK9vB3wLz7Qa5hDs",
-          "name": "Gmail account"
+      "onError": "continueErrorOutput",
+      "notes": "Google Sheets is the order ledger. New unique Order IDs are inserted once; duplicate webhook deliveries are stopped before email."
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { status: 'rejected', message: 'Invalid order payload. Check order_id, customer_email, product_name, quantity, and price.' } }}",
+        "options": {
+          "responseCode": 400
         }
       },
-      "notes": "mail"
-    },
-    {
-      "parameters": {
-        "amount": 3,
-        "unit": "days"
-      },
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
       "position": [
-        1920,
-        8
+        -1360,
+        336
       ],
-      "id": "6fa94f46-f293-4daa-9a5e-315e037fc609",
-      "name": "Wait",
-      "webhookId": "1c7e4a29-8f3b-4d6e-a9c5-7d2f8b3e6c14"
+      "id": "3330a108-8c5c-4fda-a3f1-ea083bb5e184",
+      "name": "Reject Invalid Order"
     },
     {
       "parameters": {
-        "sendTo": "={{ $('Edit Fields').item.json.customer_email }}",
-        "subject": "=How's your new {{ $('Edit Fields').item.json.product_name }}?",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_SLACK_CHANNEL_ID",
+          "mode": "list",
+          "cachedResultName": "Configure after import"
+        },
+        "text": "=Order intake failed while writing to Google Sheets. Execution: {{ $execution.id }}. Order ID: {{ $('Normalize Order Input').item.json.order_id }}. Check n8n execution details.",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.4,
+      "position": [
+        -688,
+        432
+      ],
+      "id": "03b4101e-da29-4837-afe5-5f49db1165a1",
+      "name": "Alert Google Sheets Failure",
+      "retryOnFail": true,
+      "waitBetweenTries": 3000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { status: 'failed', message: 'Order could not be persisted. Do not treat it as accepted; inspect the execution before retrying.' } }}",
+        "options": {
+          "responseCode": 500
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        -464,
+        432
+      ],
+      "id": "8651c286-b6cb-41e4-9bc9-20e94fc9e744",
+      "name": "Respond 500 on Persistence Failure"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_GOOGLE_SHEET_ID",
+          "mode": "list",
+          "cachedResultName": "Configure after import",
+          "cachedResultUrl": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_SHEET_TAB",
+          "mode": "list",
+          "cachedResultName": "Configure after import",
+          "cachedResultUrl": ""
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Order ID",
+              "lookupValue": "={{ $('Normalize Order Input').item.json.order_id }}"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -1360,
+        144
+      ],
+      "id": "18825545-00f8-4e76-bdd3-424791f3fe96",
+      "name": "Find Existing Order in Google Sheets",
+      "notesInFlow": true,
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000,
+      "onError": "continueErrorOutput",
+      "notes": "Exact Order ID lookup runs before any email or write side effect. The Orders sheet must contain one row per Order ID."
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "fea1025a-a64e-40ed-8ee5-e7b04f979e31",
+              "leftValue": "={{ String($json['Order ID'] ?? '').trim() }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -1136,
+        48
+      ],
+      "id": "c8887839-36ad-4314-9ccf-3ba4fb5281c1",
+      "name": "Duplicate Order?"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { status: 'duplicate', order_id: $('Normalize Order Input').item.json.order_id, existing_status: $json.Status ?? 'unknown', message: 'This order ID is already recorded; no second email was sent.' } }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        -912,
+        -48
+      ],
+      "id": "b278833b-b958-4831-ab63-d7a11fe677ba",
+      "name": "Return Existing Order (Duplicate)"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Normalize Order Input').item.json.customer_email }}",
+        "subject": "=We received your order #{{ $('Normalize Order Input').item.json.order_id }}",
         "emailType": "text",
-        "message": "=Hi,\n\nWe hope you've received your order and are enjoying your purchase.\n\nIf you have any questions, need support, or would like to request a replacement or refund, simply reply to this email.\n\nWe'd also love to hear your feedback.\n\nThank you for choosing us.\n\nBest Regards,\n\nYour Name\nAutoNode",
+        "message": "=Hi,\n\nWe received your order request.\n\nOrder ID: {{ $('Normalize Order Input').item.json.order_id }}\nProduct: {{ $('Normalize Order Input').item.json.product_name }}\nQuantity: {{ $('Normalize Order Input').item.json.quantity }}\nOrder total: ₹{{ (Number($('Normalize Order Input').item.json.price) * Number($('Normalize Order Input').item.json.quantity)).toFixed(2) }}\n\nThis message confirms receipt of your request only. Payment and fulfillment status will be updated after the relevant systems are connected.\n\nThank you.",
         "options": {}
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        2144,
-        8
+        -688,
+        48
       ],
-      "id": "e5e73d12-da6e-4c99-b84d-18f6a4a6a94a",
-      "name": "Send a message1",
-      "webhookId": "6b9f3d82-4e7a-4c1f-9b6d-3e8a5c2f7d91",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "mK9vB3wLz7Qa5hDs",
-          "name": "Gmail account"
-        }
-      }
+      "id": "241be657-6138-4444-bfa1-9d73795de2d2",
+      "name": "Send Order Received Email",
+      "notesInFlow": true,
+      "retryOnFail": false,
+      "waitBetweenTries": 3000,
+      "onError": "continueErrorOutput",
+      "notes": "Sends an order-received acknowledgement to the submitted email. Confirm the order originated from a trusted, authenticated source; this is not payment confirmation or fulfillment."
     },
     {
       "parameters": {
@@ -352,30 +602,41 @@
         "operation": "appendOrUpdate",
         "documentId": {
           "__rl": true,
-          "value": "1a2B3c4D5e6F7g8H9i0JkLmNoPqRsTuVwXyZ1234",
+          "value": "REPLACE_WITH_YOUR_GOOGLE_SHEET_ID",
           "mode": "list",
-          "cachedResultName": "leads",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1a2B3c4D5e6F7g8H9i0JkLmNoPqRsTuVwXyZ1234/edit?usp=drivesdk"
+          "cachedResultName": "Configure after import",
+          "cachedResultUrl": ""
         },
         "sheetName": {
           "__rl": true,
-          "value": 1,
+          "value": "REPLACE_WITH_YOUR_SHEET_TAB",
           "mode": "list",
-          "cachedResultName": "Orders",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1a2B3c4D5e6F7g8H9i0JkLmNoPqRsTuVwXyZ1234/edit#gid=1"
+          "cachedResultName": "Configure after import",
+          "cachedResultUrl": ""
         },
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "Order ID": "={{ $('Edit Fields').item.json.order_id }}",
-            "Costomer": "={{ $('Edit Fields').item.json.customer_email }}",
-            "Follow-up Sent": "={{ new Date().toLocaleDateString() }}",
-            "Status": "Follow-up Completed"
+            "Order ID": "={{ $('Normalize Order Input').item.json.order_id }}",
+            "Customer": "={{ $('Normalize Order Input').item.json.customer_email }}",
+            "Product": "={{ $('Normalize Order Input').item.json.product_name }}",
+            "Quantity": "={{ Number($('Normalize Order Input').item.json.quantity) }}",
+            "status": "Email-Confirm"
           },
           "matchingColumns": [
             "Order ID"
           ],
           "schema": [
+            {
+              "id": "order_date",
+              "displayName": "order_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
             {
               "id": "Order ID",
               "displayName": "Order ID",
@@ -387,8 +648,8 @@
               "removed": false
             },
             {
-              "id": "Costomer",
-              "displayName": "Costomer",
+              "id": "Customer",
+              "displayName": "Customer",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -397,8 +658,8 @@
               "removed": false
             },
             {
-              "id": "Follow-up Sent",
-              "displayName": "Follow-up Sent",
+              "id": "Product",
+              "displayName": "Product",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -407,8 +668,108 @@
               "removed": false
             },
             {
-              "id": "Status",
-              "displayName": "Status",
+              "id": "Quantity",
+              "displayName": "Quantity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "warehouse",
+              "displayName": "warehouse",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "froud risk",
+              "displayName": "froud risk",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "cutomer segment",
+              "displayName": "cutomer segment",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Shipping",
+              "displayName": "Shipping",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Delivery Date",
+              "displayName": "Delivery Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "payment",
+              "displayName": "payment",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "country",
+              "displayName": "country",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "created at",
+              "displayName": "created at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -425,502 +786,583 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        2368,
-        8
+        -464,
+        -48
       ],
-      "id": "33aacbd4-2e0e-4dcf-a9b8-9ef7eccf2dcb",
-      "name": "Append or update row in sheet1",
-      "credentials": {
-        "googleApi": {
-          "id": "hF7Qz2WcRq9NpXeS",
-          "name": "Google Sheets account"
-        }
-      }
+      "id": "a546f1da-4ac8-4bc7-9616-7f8356b6dda5",
+      "name": "Mark Confirmation Sent in Google Sheets",
+      "retryOnFail": true,
+      "waitBetweenTries": 2000,
+      "maxTries": 3,
+      "notesInFlow": true,
+      "onError": "continueErrorOutput",
+      "notes": "Google Sheets is the order ledger. New unique Order IDs are inserted once; duplicate webhook deliveries are stopped before email."
     },
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 3
+        "authentication": "serviceAccount",
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_GOOGLE_SHEET_ID",
+          "mode": "list",
+          "cachedResultName": "Configure after import",
+          "cachedResultUrl": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_SHEET_TAB",
+          "mode": "list",
+          "cachedResultName": "Configure after import",
+          "cachedResultUrl": ""
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Order ID": "={{ $('Normalize Order Input').item.json.order_id }}",
+            "Customer": "={{ $('Normalize Order Input').item.json.customer_email }}",
+            "Product": "={{ $('Normalize Order Input').item.json.product_name }}",
+            "Quantity": "={{ Number($('Normalize Order Input').item.json.quantity) }}",
+            "status": "Email Failed - Manual Check"
           },
-          "conditions": [
+          "matchingColumns": [
+            "Order ID"
+          ],
+          "schema": [
             {
-              "id": "e79aecd1-c668-4a92-8110-79e01149c32e",
-              "leftValue": "={{ $json.price }}",
-              "rightValue": 0,
-              "operator": {
-                "type": "number",
-                "operation": "gt"
-              }
+              "id": "order_date",
+              "displayName": "order_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
             },
             {
-              "id": "0cd661bc-c258-4b50-a7b6-09cc2d23c25d",
-              "leftValue": "={{ $json.customer_email }}",
-              "rightValue": "@",
-              "operator": {
-                "type": "string",
-                "operation": "contains"
-              }
+              "id": "Order ID",
+              "displayName": "Order ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
             },
             {
-              "id": "37af5d83-7963-4e29-bce1-222fff3eb2a7",
-              "leftValue": "={{ $json.quantity }}",
-              "rightValue": 0,
-              "operator": {
-                "type": "number",
-                "operation": "gt"
-              }
+              "id": "Customer",
+              "displayName": "Customer",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
             },
             {
-              "id": "0afcf10b-c610-44ba-abf5-72b364ea3b8d",
-              "leftValue": "={{ $json.order_id }}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "notEmpty",
-                "singleValue": true
-              }
+              "id": "Product",
+              "displayName": "Product",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
             },
             {
-              "id": "028f94d8-268c-4874-b959-d01df0c9fc1a",
-              "leftValue": "={{ $json.product_name }}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "notEmpty",
-                "singleValue": true
-              }
+              "id": "Quantity",
+              "displayName": "Quantity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "warehouse",
+              "displayName": "warehouse",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "froud risk",
+              "displayName": "froud risk",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "cutomer segment",
+              "displayName": "cutomer segment",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Shipping",
+              "displayName": "Shipping",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Delivery Date",
+              "displayName": "Delivery Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "payment",
+              "displayName": "payment",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "country",
+              "displayName": "country",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "created at",
+              "displayName": "created at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
             }
           ],
-          "combinator": "and"
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
         },
         "options": {}
       },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.3,
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
       "position": [
-        448,
-        252
+        -560,
+        240
       ],
-      "id": "d4698e04-9d0f-4920-9555-11dbbda37b41",
-      "name": "If"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "3f85029a-aaf4-44dc-9140-02ee573e849c",
-              "name": "order_id",
-              "value": "={{ $json.body.order_id }}",
-              "type": "string"
-            },
-            {
-              "id": "b9ceb0a6-c6ca-40cc-8283-074cf78aec82",
-              "name": "customer_email",
-              "value": "={{ $json.body.customer_email }}",
-              "type": "string"
-            },
-            {
-              "id": "34a5dd3e-cdd5-463a-94fb-e2e38e0cb4e5",
-              "name": "product_name",
-              "value": "={{ $json.body.product_name }}",
-              "type": "string"
-            },
-            {
-              "id": "851b31ac-2ba9-4d4a-80af-e76bd2a18417",
-              "name": "quantity",
-              "value": "={{ $json.body.quantity }}",
-              "type": "number"
-            },
-            {
-              "id": "49a112a0-14a5-4212-874f-83e6ac4b0f03",
-              "name": "price",
-              "value": "={{ $json.body.price }}",
-              "type": "number"
-            },
-            {
-              "id": "24067daa-a084-4803-8ed0-30bf1bb051a3",
-              "name": "customer_name",
-              "value": "",
-              "type": "string"
-            },
-            {
-              "id": "b6c77a68-5e2a-43b7-a06b-651f7bf1f77a",
-              "name": "customer_phone",
-              "value": "",
-              "type": "string"
-            },
-            {
-              "id": "8451ffb7-9848-47e5-878d-1ee99c72f3ad",
-              "name": "",
-              "value": "",
-              "type": "string"
-            },
-            {
-              "id": "ab7e2647-0356-4bb3-803d-fb72de20a69b",
-              "name": "shiping_address",
-              "value": "",
-              "type": "string"
-            },
-            {
-              "id": "6a92983c-31d5-40aa-8f4f-df5bccf0d563",
-              "name": "shiping_method",
-              "value": "",
-              "type": "string"
-            },
-            {
-              "id": "ecdbbdc7-d556-4caa-a17f-21ee1844d006",
-              "name": "currency",
-              "value": "INR",
-              "type": "string"
-            },
-            {
-              "id": "0868f4e9-cfa6-4bb5-9ca3-3cd0d6993895",
-              "name": "country",
-              "value": "",
-              "type": "string"
-            },
-            {
-              "id": "8baae112-9118-4555-8977-0d7c74f9adc5",
-              "name": "order_date",
-              "value": "={{ $now.toISO() }}",
-              "type": "string"
-            },
-            {
-              "id": "a3557f8c-c4a4-4c4a-8a57-87c23a058f49",
-              "name": "total_amount",
-              "value": "={{ Number($json.body.price) * Number($json.body.quantity) }}",
-              "type": "string"
-            },
-            {
-              "id": "f82a46e8-3a73-48ac-af8c-3581f9e7ae8a",
-              "name": "status",
-              "value": "Received",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        736,
-        400
-      ],
-      "id": "5b6247f1-96e6-4a83-b9cb-05e9a0750359",
-      "name": "Edit Fields1"
-    },
-    {
-      "parameters": {
-        "respondWith": "json",
-        "responseBody": "{\n\"status\":\"failed\",\n\n\"reason\":\"Invalid Order\"\n}",
-        "options": {
-          "responseCode": 400
-        }
-      },
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.5,
-      "position": [
-        1024,
-        400
-      ],
-      "id": "2e01c60f-2084-4d64-bc58-165336517306",
-      "name": "Respond to Webhook"
-    },
-    {
-      "parameters": {
-        "model": "llama-3.3-70b-versatile",
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
-      "typeVersion": 1,
-      "position": [
-        680,
-        224
-      ],
-      "id": "b7137c54-23b2-429c-9a7c-0a73aea7f2b6",
-      "name": "Groq Chat Model",
-      "credentials": {
-        "groqApi": {
-          "id": "gA7xR2mKq9LpZ4Wd",
-          "name": "Groq account"
-        }
-      }
+      "id": "f2f4df89-0125-45e9-9b5d-e94b6177fb3c",
+      "name": "Mark Email Failed in Google Sheets",
+      "retryOnFail": true,
+      "waitBetweenTries": 2000,
+      "maxTries": 3,
+      "notesInFlow": true,
+      "onError": "continueErrorOutput",
+      "notes": "Google Sheets is the order ledger. New unique Order IDs are inserted once; duplicate webhook deliveries are stopped before email."
     },
     {
       "parameters": {
         "select": "channel",
         "channelId": {
           "__rl": true,
-          "value": "C05MZQK8FT2",
+          "value": "REPLACE_WITH_YOUR_SLACK_CHANNEL_ID",
           "mode": "list",
-          "cachedResultName": "your-channel-name"
+          "cachedResultName": "Configure after import"
         },
-        "text": "=🛒 New Order  Order: {{ $('Edit Fields').item.json.order_id }}  Customer: {{ $('Edit Fields').item.json.customer_email }}  Priority: {{ $('AI Agent').item.json.output.priority }}  Shipping: {{ $('AI Agent').item.json.output.shipping_method }}  Status: {{ $('AI Agent').item.json.output.status }}  Delivery: {{ $('AI Agent').item.json.output.estimated_delivery }}",
+        "text": "=Order {{ $('Normalize Order Input').item.json.order_id }} — Confirmation Sent. Customer PII is omitted.",
         "otherOptions": {}
       },
       "type": "n8n-nodes-base.slack",
       "typeVersion": 2.4,
       "position": [
-        1024,
-        104
+        -16,
+        -96
       ],
-      "id": "33ac5d30-16c0-4b9c-bfae-109a9bd48843",
-      "name": "Send a message2",
-      "webhookId": "9d2f7c84-3e6b-4a9c-8f1d-5b7e3c9a2d68",
-      "credentials": {
-        "slackApi": {
-          "id": "xR4pW8gTn2LmYsQ1",
-          "name": "Slack account"
-        }
-      }
+      "id": "535c9b0f-2db2-444c-ae53-566f0e048a00",
+      "name": "Notify Order Logged",
+      "retryOnFail": true,
+      "waitBetweenTries": 3000,
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 3
-          },
-          "conditions": [
-            {
-              "id": "8f4921e0-68c7-4505-b358-54210e5d578f",
-              "leftValue": "status",
-              "rightValue": "aproved",
-              "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
-              }
-            }
-          ],
-          "combinator": "and"
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_SLACK_CHANNEL_ID",
+          "mode": "list",
+          "cachedResultName": "Configure after import"
         },
-        "options": {}
+        "text": "=Order {{ $('Normalize Order Input').item.json.order_id }} — Gmail send failed or timed out. Check execution {{ $execution.id }} and Gmail before manually retrying.",
+        "otherOptions": {}
       },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.3,
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.4,
       "position": [
-        1472,
-        104
+        -240,
+        336
       ],
-      "id": "8522dfa0-2aae-44d7-9b68-04da868c3d50",
-      "name": "If1"
+      "id": "96deb858-b802-47c4-8969-bdb40688c57d",
+      "name": "Alert Email Send Failure",
+      "retryOnFail": true,
+      "waitBetweenTries": 3000,
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
-        "sendTo": "={{ $('Edit Fields').item.json.customer_email }}",
-        "subject": "=Your Order is Under Review",
-        "emailType": "text",
-        "message": "=Hi,\n\nThank you for your order.\n\nWe're currently reviewing your order before processing.\n\nWe'll notify you once it's approved.\n\nThank you for your patience.",
-        "options": {}
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_SLACK_CHANNEL_ID",
+          "mode": "list",
+          "cachedResultName": "Configure after import"
+        },
+        "text": "=Order {{ $('Normalize Order Input').item.json.order_id }} — could not persist post-email status. Check execution {{ $execution.id }} and Gmail/Sheets before retrying.",
+        "otherOptions": {}
       },
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.2,
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.4,
       "position": [
-        1696,
-        200
+        -240,
+        144
       ],
-      "id": "c3d56dfb-fc0e-4019-9696-157d477442c0",
-      "name": "Send a message3",
-      "webhookId": "6b9f3d82-4e7a-4c1f-9b6d-3e8a5c2f7d91",
-      "notesInFlow": true,
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "mK9vB3wLz7Qa5hDs",
-          "name": "Gmail account"
-        }
-      },
-      "notes": "mail"
+      "id": "c4e091fb-1419-4bec-b753-3fbd94e4bac1",
+      "name": "Alert Failed Status Update",
+      "retryOnFail": true,
+      "waitBetweenTries": 3000,
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "{\n\"status\":\"failed\",\n\n\"reason\":\"Invalid Order\"\n}",
+        "responseBody": "={{ { status: 'confirmation_sent', order_id: $('Normalize Order Input').item.json.order_id, message: 'Order recorded and receipt email sent.' } }}",
         "options": {
-          "responseCode": 400
+          "responseCode": 201
         }
       },
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.5,
       "position": [
-        2592,
-        8
+        -240,
+        -96
       ],
-      "id": "856644b8-9a06-4a5f-bf38-aea30f0b7bd9",
-      "name": "Respond to Webhook1"
+      "id": "611476a4-8896-4a13-906a-da3adbac8e5e",
+      "name": "Respond 201 Order Created"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { status: 'email_outcome_unknown_or_failed', order_id: $('Normalize Order Input').item.json.order_id, message: 'Order is recorded. Check Gmail and the execution before retrying.' } }}",
+        "options": {
+          "responseCode": 502
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        -16,
+        336
+      ],
+      "id": "79f89f8d-9016-4e67-b217-ffb356a9369d",
+      "name": "Respond 502 Email Needs Manual Check"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { status: 'status_update_failed', order_id: $('Normalize Order Input').item.json.order_id, message: 'The order email may already have been sent. Check Gmail and Google Sheets before retrying.' } }}",
+        "options": {
+          "responseCode": 500
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        -16,
+        144
+      ],
+      "id": "2bd1c31b-07be-4a20-821f-25f3cc05a060",
+      "name": "Respond 500 Status Update Failure"
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_YOUR_SLACK_CHANNEL_ID",
+          "mode": "list",
+          "cachedResultName": "Configure after import"
+        },
+        "text": "=Order {{ $('Normalize Order Input').item.json.order_id }} — duplicate lookup in Google Sheets failed. No order email was sent. Execution: {{ $execution.id }}.",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.4,
+      "position": [
+        -1136,
+        336
+      ],
+      "id": "9f18af50-e3ff-4108-9b61-59309b5082fc",
+      "name": "Alert Duplicate Lookup Failure",
+      "retryOnFail": true,
+      "waitBetweenTries": 3000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { status: 'duplicate_check_unavailable', order_id: $('Normalize Order Input').item.json.order_id, message: 'Order was not processed because the duplicate check failed. Retry after checking the execution.' } }}",
+        "options": {
+          "responseCode": 503
+        }
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        -912,
+        336
+      ],
+      "id": "435a149e-e286-41c5-b8da-3b1a1828a85c",
+      "name": "Respond 503 Duplicate Check Unavailable"
     }
   ],
   "connections": {
-    "Webhook": {
+    "Authenticated Order Webhook": {
       "main": [
         [
           {
-            "node": "Edit Fields",
+            "node": "Normalize Order Input",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Edit Fields": {
+    "Normalize Order Input": {
       "main": [
         [
           {
-            "node": "If",
+            "node": "Validate Order Input",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "AI Agent": {
+    "Validate Order Input": {
       "main": [
         [
           {
-            "node": "Send a message2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Structured Output Parser": {
-      "ai_outputParser": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_outputParser",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Append or update row in sheet": {
-      "main": [
-        [
-          {
-            "node": "If1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Send a message": {
-      "main": [
-        [
-          {
-            "node": "Wait",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Wait": {
-      "main": [
-        [
-          {
-            "node": "Send a message1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Send a message1": {
-      "main": [
-        [
-          {
-            "node": "Append or update row in sheet1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Append or update row in sheet1": {
-      "main": [
-        [
-          {
-            "node": "Respond to Webhook1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If": {
-      "main": [
-        [
-          {
-            "node": "AI Agent",
+            "node": "Find Existing Order in Google Sheets",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Edit Fields1",
+            "node": "Reject Invalid Order",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Edit Fields1": {
+    "Upsert New Order in Google Sheets": {
       "main": [
         [
           {
-            "node": "Respond to Webhook",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Groq Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Send a message2": {
-      "main": [
-        [
-          {
-            "node": "Append or update row in sheet",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If1": {
-      "main": [
-        [
-          {
-            "node": "Send a message",
+            "node": "Send Order Received Email",
             "type": "main",
             "index": 0
           }
         ],
         [
           {
-            "node": "Send a message3",
+            "node": "Alert Google Sheets Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alert Google Sheets Failure": {
+      "main": [
+        [
+          {
+            "node": "Respond 500 on Persistence Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Existing Order in Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Duplicate Order?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alert Duplicate Lookup Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Duplicate Order?": {
+      "main": [
+        [
+          {
+            "node": "Return Existing Order (Duplicate)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Upsert New Order in Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Order Received Email": {
+      "main": [
+        [
+          {
+            "node": "Mark Confirmation Sent in Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Mark Email Failed in Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Confirmation Sent in Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Respond 201 Order Created",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alert Failed Status Update",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Email Failed in Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Alert Email Send Failure",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Alert Failed Status Update",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alert Email Send Failure": {
+      "main": [
+        [
+          {
+            "node": "Respond 502 Email Needs Manual Check",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alert Failed Status Update": {
+      "main": [
+        [
+          {
+            "node": "Respond 500 Status Update Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond 201 Order Created": {
+      "main": [
+        [
+          {
+            "node": "Notify Order Logged",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Alert Duplicate Lookup Failure": {
+      "main": [
+        [
+          {
+            "node": "Respond 503 Duplicate Check Unavailable",
             "type": "main",
             "index": 0
           }
@@ -928,8 +1370,7 @@
       ]
     }
   },
-  "pinData": {},
   "meta": {
-    "templateCredsSetupCompleted": true
+    "templateCredsSetupCompleted": false
   }
 }

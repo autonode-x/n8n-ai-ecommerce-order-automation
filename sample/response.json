@@ -1,0 +1,5 @@
+{
+  "status": "confirmation_sent",
+  "order_id": "DEMO-ORDER-001",
+  "message": "Order recorded and receipt email sent."
+}

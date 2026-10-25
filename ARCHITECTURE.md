@@ -1,6 +1,5 @@
 # E-commerce Order Intake & Confirmation — Architecture
 
-![Architecture infographic](assets/architecture.png)
 
 
 **Accept an order request, validate it, detect common duplicates, save a minimal record, and email a receipt-of-request confirmation.**
